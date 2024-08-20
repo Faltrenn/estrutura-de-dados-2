@@ -10,7 +10,7 @@
 #include "bt.h"
 
 int main(int argc, const char * argv[]) {
-    struct node* raiz = NULL;
+    struct node* r = NULL;
 
     struct timespec s, e;
     int t;
@@ -18,14 +18,24 @@ int main(int argc, const char * argv[]) {
     srand(time(NULL));
     
     for (int i = 0; i < 100; i++) {
-        btinsert(&raiz, create_node(rand()));
+        btinsert(&r, create_node(rand()));
     }
+    
+//  Caso esperado
+//    clock_gettime(CLOCK_MONOTONIC, &s);
+//    for (int c = 0; c < 1000; c++) {
+//        btsearch(&r, rand());
+//    }
+//    clock_gettime(CLOCK_MONOTONIC, &e);
 
+//  Melhor caso
     clock_gettime(CLOCK_MONOTONIC, &s);
     for (int c = 0; c < 1000; c++) {
-        btsearch(&raiz, rand());
+        btsearch(&r, r->v);
     }
     clock_gettime(CLOCK_MONOTONIC, &e);
+    
+    btfree(r);
 
     t = (e.tv_sec * 1e9 + e.tv_nsec) - (s.tv_sec * 1e9 + s.tv_nsec);
 

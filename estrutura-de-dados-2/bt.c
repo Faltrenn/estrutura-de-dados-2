@@ -43,6 +43,14 @@ struct node** btsearch(struct node** r, int v) {
     return NULL;
 }
 
+void btfree(struct node *r) {
+    if (r != NULL) {
+        btfree(r->l);
+        btfree(r->r);
+        free(r);
+    }
+}
+
 void btprint(struct node* r) {
     if (r != NULL) {
         btprint(r->l);
