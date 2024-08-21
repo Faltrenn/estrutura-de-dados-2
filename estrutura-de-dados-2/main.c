@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "bt.h"
+#include "avl.h"
 
 int main(int argc, const char * argv[]) {
     struct node* r = NULL;
@@ -17,21 +18,22 @@ int main(int argc, const char * argv[]) {
 
     srand(time(NULL));
 //  Melhor caso e caso esperado
-//    for (int i = 0; i < 100; i++) {
-//        btinsert(&r, create_node(rand()));
-//    }
-    
-//  Pior caso
     for (int i = 0; i < 100; i++) {
-        btinsert(&r, create_node(i));
+        avlinsert(&r, create_node(rand()), &r);
     }
     
-//  Caso esperado
-//    clock_gettime(CLOCK_MONOTONIC, &s);
-//    for (int c = 0; c < 1000; c++) {
-//        btsearch(&r, rand());
+//  Pior caso
+//    for (int i = 0; i < 100; i++) {
+//        avlinsert(&r, create_node(i), &r);
 //    }
-//    clock_gettime(CLOCK_MONOTONIC, &e);
+//    tprint(r);
+    
+//  Caso esperado
+    clock_gettime(CLOCK_MONOTONIC, &s);
+    for (int c = 0; c < 1000; c++) {
+        btsearch(&r, rand());
+    }
+    clock_gettime(CLOCK_MONOTONIC, &e);
 
 //  Melhor caso
 //    clock_gettime(CLOCK_MONOTONIC, &s);
