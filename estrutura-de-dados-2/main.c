@@ -16,9 +16,14 @@ int main(int argc, const char * argv[]) {
     int t;
 
     srand(time(NULL));
+//  Melhor caso e caso esperado
+//    for (int i = 0; i < 100; i++) {
+//        btinsert(&r, create_node(rand()));
+//    }
     
+//  Pior caso
     for (int i = 0; i < 100; i++) {
-        btinsert(&r, create_node(rand()));
+        btinsert(&r, create_node(i));
     }
     
 //  Caso esperado
@@ -29,9 +34,16 @@ int main(int argc, const char * argv[]) {
 //    clock_gettime(CLOCK_MONOTONIC, &e);
 
 //  Melhor caso
+//    clock_gettime(CLOCK_MONOTONIC, &s);
+//    for (int c = 0; c < 1000; c++) {
+//        btsearch(&r, r->v);
+//    }
+//    clock_gettime(CLOCK_MONOTONIC, &e);
+    
+//  Pior caso
     clock_gettime(CLOCK_MONOTONIC, &s);
     for (int c = 0; c < 1000; c++) {
-        btsearch(&r, r->v);
+        btsearch(&r, 100);
     }
     clock_gettime(CLOCK_MONOTONIC, &e);
     
