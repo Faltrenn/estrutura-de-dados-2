@@ -23,7 +23,7 @@ struct node {
 struct node * create_node(int);
 void btinsert(struct node **, struct node *);
 struct node** btsearch(struct node**, int);
-void btfree(struct node *);
-void btprint(struct node*);
+void tfree(struct node *);
+void tprint(struct node*);
 
 #endif /* bt_h */

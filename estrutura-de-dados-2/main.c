@@ -47,7 +47,7 @@ int main(int argc, const char * argv[]) {
     }
     clock_gettime(CLOCK_MONOTONIC, &e);
     
-    btfree(r);
+    tfree(r);
 
     t = (e.tv_sec * 1e9 + e.tv_nsec) - (s.tv_sec * 1e9 + s.tv_nsec);
 

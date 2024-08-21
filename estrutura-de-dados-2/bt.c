@@ -43,18 +43,18 @@ struct node** btsearch(struct node** r, int v) {
     return NULL;
 }
 
-void btfree(struct node *r) {
+void tfree(struct node *r) {
     if (r != NULL) {
-        btfree(r->l);
-        btfree(r->r);
+        tfree(r->l);
+        tfree(r->r);
         free(r);
     }
 }
 
-void btprint(struct node* r) {
+void tprint(struct node* r) {
     if (r != NULL) {
-        btprint(r->l);
+        tprint(r->l);
         printf("%d \n", r->v);
-        btprint(r->r);
+        tprint(r->r);
     }
 }
