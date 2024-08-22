@@ -7,19 +7,27 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 #include "bt.h"
 #include "avl.h"
 #include "tests.h"
 
 int main(int argc, const char * argv[]) {
-    tests_bt();
+    int type = 2;
+    if (strcmp(argv[1], "b") == 0) {
+        type = 0;
+    } else if (strcmp(argv[1], "e") == 0) {
+        type = 1;
+    }
+
+    tests_bt(type);
 //    struct node* r = NULL;
 //
 //    struct timespec s, e;
 //    int t;
 //
 //    srand((unsigned int) time(NULL));
-////  Melhor caso e caso esperado
+//  Melhor caso e caso esperado
 //    for (int i = 0; i < 10000; i++) {
 //        avlinsert(&r, create_node(rand()), &r);
 //    }
