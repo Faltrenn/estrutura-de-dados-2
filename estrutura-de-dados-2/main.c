@@ -16,9 +16,9 @@ int main(int argc, const char * argv[]) {
     struct timespec s, e;
     int t;
 
-    srand(time(NULL));
+    srand((unsigned int) time(NULL));
 //  Melhor caso e caso esperado
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10000; i++) {
         avlinsert(&r, create_node(rand()), &r);
     }
     
@@ -30,7 +30,7 @@ int main(int argc, const char * argv[]) {
     
 //  Caso esperado
     clock_gettime(CLOCK_MONOTONIC, &s);
-    for (int c = 0; c < 1000; c++) {
+    for (int c = 0; c < 100; c++) {
         btsearch(&r, rand());
     }
     clock_gettime(CLOCK_MONOTONIC, &e);
@@ -43,11 +43,11 @@ int main(int argc, const char * argv[]) {
 //    clock_gettime(CLOCK_MONOTONIC, &e);
     
 //  Pior caso
-    clock_gettime(CLOCK_MONOTONIC, &s);
-    for (int c = 0; c < 1000; c++) {
-        btsearch(&r, 100);
-    }
-    clock_gettime(CLOCK_MONOTONIC, &e);
+//    clock_gettime(CLOCK_MONOTONIC, &s);
+//    for (int c = 0; c < 1000; c++) {
+//        btsearch(&r, 100);
+//    }
+//    clock_gettime(CLOCK_MONOTONIC, &e);
     
     tfree(r);
 

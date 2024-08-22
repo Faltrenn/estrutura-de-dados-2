@@ -28,7 +28,7 @@ void hinsert(struct htable *t, struct block *b) {
     }
 }
 
-void hfree(struct htable * t) {
+void free_hash(struct htable * t) {
     for(int i = 0; i < t->m; i++){
         free_block(t->l[i]);
         t->l[i] = NULL;
@@ -105,6 +105,6 @@ void hrefresh(struct htable* t, struct block* b) {
             nt.n = nt.n + 1;
         }
     }
-    hfree(t);
+    free_hash(t);
     (*t) = nt;
 }
