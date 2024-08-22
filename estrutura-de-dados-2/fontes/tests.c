@@ -66,6 +66,8 @@ void tests_bt(unsigned int type) {
             break;
     }
     fclose(f);
+    
+    printf("%s finished.\n", TESTS_LABELS[type]);
 }
 
 int test_bt_avl(struct node *btavl) {

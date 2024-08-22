@@ -16,7 +16,7 @@ args = sys.argv[1:]
 x_values = []
 y_values = []
 
-file = []
+files = []
 cases = []
 start_cases = -1
 if "-c" in args:
@@ -24,7 +24,7 @@ if "-c" in args:
     files = args[: start_cases]
     cases = args[start_cases:]
 else:
-    cases = ["b", "m", "w"]
+    cases = ["b", "e", "w"]
     files = args
 
 files_path = []
