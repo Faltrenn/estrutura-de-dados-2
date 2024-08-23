@@ -35,6 +35,8 @@ for file in files:
             files_path.append(file_path)
 
 for i, file in enumerate(files_path):
+    x_values = []
+    y_values = []
     with open(file, 'r') as f:
         for line in f:
             x_values.append(int(line.split(" ")[0]))

@@ -20,8 +20,20 @@ int main(int argc, const char * argv[]) {
 //        type = 1;
 //    }
 
-    tests_bt(0);
-    tests_bt(1);
-    tests_bt(2);
+//    tests_bt(1);
+//    tests_bt(1);
+//    tests_bt(0);
+//    tests_bt(2);
+    printf("start1\n");
+    struct node *r = NULL;
+    for (int i = 0; i < 30; i++) {
+        get_worst_avl(&r);
+    }
+    printf("start2\n");
+    
+    tests_avl(1);
+    tests_avl(1);
+    tests_avl(0);
+    tests_avl(2);
     return 0;
 }
