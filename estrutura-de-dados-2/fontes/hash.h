@@ -22,12 +22,16 @@ struct htable {
 };
 
 struct block* create_block(int);
-void hinsert(struct htable*, struct block*);
-void hfree(struct htable*);
-void free_block(struct block*);
+void hinsert(struct htable *, struct block*);
+void best_hrefresh(struct htable *, struct block *);
+void best_hinsert(struct htable *, struct block *);
+void worst_hinsert(struct htable *, struct block *);
+void hfree(struct htable *);
+void free_block(struct block *);
 void hprint(struct htable *);
 void hlprint(struct block *);
 int hash_search(struct htable *, int);
+int best_hash_search(struct htable *, int);
 void hrefresh(struct htable *, struct block*);
 
 

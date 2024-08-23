@@ -8,6 +8,7 @@
 #include "tests.h"
 #include "bt.h"
 #include "avl.h"
+#include "hash.h"
 #include <time.h>
 
 const int TEST_REPEAT = 1000;
@@ -64,7 +65,7 @@ void tests_bt(unsigned int type) {
     fclose(f);
     
     printf("%s finished.\n", TESTS_LABELS[type]);
-    free(r);
+    tfree(r);
 }
 
 int test_bt_avl(struct node *btavl) {
@@ -128,5 +129,100 @@ void tests_avl(unsigned int type) {
     fclose(f);
     
     printf("%s finished.\n", TESTS_LABELS[type]);
-    free(r);
+    tfree(r);
+}
+
+struct htable * get_best_htable(int n) {
+    struct htable *nt = (struct htable *) malloc(sizeof(struct htable));
+    nt->l = (struct block **) malloc(sizeof(struct block *) * 4);
+    nt->n = 0;
+    nt->m = n+1;
+    
+    for (int i = 0; i < n; i++) {
+        hinsert(nt, create_block(i));
+    }
+    return nt;
+}
+
+struct htable * get_expected_htable(int n) {
+    struct htable *nt = (struct htable *) malloc(sizeof(struct htable));
+    nt->l = (struct block **) malloc(sizeof(struct block *) * 4);
+    nt->n = 0;
+    nt->m = 4;
+    
+    for (int i = 0; i < 4; i++) {
+        nt->l[i] = NULL;
+    }
+    printf("?\n");
+    for (int i = 0; i < n; i++) {
+        hinsert(nt, create_block(rand()));
+    }
+    printf("!\n");
+    
+    return nt;
+}
+
+struct htable * get_worst_htable(int n) {
+    struct htable *nt = (struct htable *)malloc(sizeof(struct htable));
+    nt->l = (struct block **) malloc(sizeof(struct block *) * 4);
+    nt->n = 0;
+    nt->m = 1;
+    
+    for (int i = 0; i < 4; i++) {
+        nt->l[i] = NULL;
+    }
+    for (int i = 0; i < n; i++) {
+        worst_hinsert(nt, create_block(rand()));
+    }
+    
+    return nt;
+}
+
+int test_htable(struct htable *t) {
+    struct timespec s, e;
+    clock_gettime(CLOCK_MONOTONIC, &s);
+    for (int c = 0; c < TEST_REPEAT; c++) {
+        hash_search(t, rand());
+    }
+    clock_gettime(CLOCK_MONOTONIC, &e);
+    
+    return (e.tv_sec * 1e9 + e.tv_nsec) - (s.tv_sec * 1e9 + s.tv_nsec);
+}
+
+void tests_htable(unsigned int type) {
+    char *file_name = (char *) malloc(sizeof(char) * 29);
+    sprintf(file_name, "../graficos/hash-%s.txt", TESTS_LABELS[type]);
+    FILE *f = fopen(file_name, "w");
+    
+    if (f == NULL) {
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
+    }
+    struct htable *t = NULL;
+    switch (type) {
+        case 0:
+            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+                t = get_best_htable(dif);
+                fprintf(f, "%d %d\n", dif, test_htable(t));
+            }
+            break;
+        case 1:
+            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+                printf("start\n");
+                t = get_expected_htable(dif);
+                printf("%d %d\n", dif, test_htable(t));
+                fprintf(f, "%d %d\n", dif, test_htable(t));
+            }
+            break;
+        default:
+            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+                t = get_worst_htable(dif);
+                fprintf(f, "%d %d\n", dif, test_htable(t));
+            }
+            break;
+    }
+    fclose(f);
+    
+    printf("%s finished.\n", TESTS_LABELS[type]);
+    hfree(t);
 }

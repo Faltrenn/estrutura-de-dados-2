@@ -21,14 +21,20 @@ void hinsert(struct htable *t, struct block *b) {
     if(t->n >= t->m) {
         hrefresh(t, b);
     } else {
-        int i = 0;
+        int i = b->v % t->m;
         b->next = t->l[i];
         t->l[i] = b;
-        t->n = t->n + 1;;
+        t->n = t->n + 1;
     }
 }
 
-void free_hash(struct htable * t) {
+void worst_hinsert(struct htable *t, struct block *b) {
+    b->next = t->l[0];
+    t->l[0] = b;
+    t->n = t->n + 1;;
+}
+
+void hfree(struct htable * t) {
     for(int i = 0; i < t->m; i++){
         free_block(t->l[i]);
         t->l[i] = NULL;
@@ -75,7 +81,7 @@ int hash_search(struct htable *t, int v) {
     return 0;
 }
 
-void hrefresh(struct htable* t, struct block* b) {
+void hrefresh(struct htable *t, struct block *b) {
     struct htable nt;
     nt.m = (t->m * 2);
     nt.l = malloc(sizeof(struct block *) * nt.m);
@@ -105,6 +111,5 @@ void hrefresh(struct htable* t, struct block* b) {
             nt.n = nt.n + 1;
         }
     }
-    free_hash(t);
     (*t) = nt;
 }

@@ -18,30 +18,30 @@ void avlinsert(struct node** aux, struct node* n, struct node** r) {
             avlinsert(&((*aux)->r), n, r);
         }
     }
-    balance(*aux, r); // Balancear após a inserção
+    balance(*aux, r);
 }
 
 void balance(struct node* n, struct node** r) {
     while (n != NULL) {
-        update_height(n);
         int balance_factor = height_offset(n);
+        update_height(n);
 
         if (balance_factor > 1) {
             if (n->l != NULL && height_offset(n->l) >= 0) {
-                rr(&n); // Rotação à direita
+                rr(&n);
             } else if (n->l != NULL) {
-                lr(&(n->l)); // Rotação à esquerda-direita
+                lr(&(n->l));
                 rr(&n);
             } else if (n->r != NULL && height_offset(n->r) >= 0) {
-                lr(&n); // Rotação à esquerda
+                lr(&n);
             } else {
-                rr(&(n->r)); // Rotação à direita-esquerda
+                rr(&(n->r));
                 lr(&n);
             }
         }
 
         if (n->p == NULL) {
-            *r = n; // Atualiza a raiz
+            *r = n;
         }
         n = n->p;
     }
