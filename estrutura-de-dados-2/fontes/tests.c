@@ -25,11 +25,23 @@ void get_expected_bt(struct node **r) {
     }
 }
 
+int get_last_value(struct node *r) {
+    if (r == NULL) {
+        return 0;
+    }
+    if (r->r == NULL) {
+        return r->v;
+    }
+    return get_last_value(r->r);
+}
+
 void get_worst_bt(struct node **r) {
-    for (int i = 0; i < INCREMENT; i++) {
+    int last_value = get_last_value(*r);
+    for (int i = last_value; i < last_value + INCREMENT; i++) {
         btinsert(r, create_node(i));
     }
 }
+
 
 void tests_bt(unsigned int type) {
     char *file_name = (char *) malloc(sizeof(char) * 28);
@@ -121,7 +133,6 @@ void tests_avl(unsigned int type) {
         default:
             for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 get_worst_avl(&r);
-                printf("%d %d\n", dif, test_bt_avl(r));
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
@@ -145,27 +156,18 @@ struct htable * get_best_htable(int n) {
 }
 
 struct htable * get_expected_htable(int n) {
-    printf("a\n");
     struct htable *nt = (struct htable *) malloc(sizeof(struct htable));
-    printf("a\n");
     nt->l = (struct block **) malloc(sizeof(struct block *) * 4);
-    printf("a\n");
     nt->n = 0;
-    printf("a\n");
     nt->m = 4;
-    printf("a\n");
     
     for (int i = 0; i < 4; i++) {
         nt->l[i] = NULL;
-        printf("!\n");
     }
     
     for (int i = 0; i < n; i++) {
         hinsert(nt, create_block(rand()));
-        printf("?\n");
     }
-    
-    printf("get\n");
     
     return nt;
 }
@@ -216,9 +218,7 @@ void tests_htable(unsigned int type) {
             break;
         case 1:
             for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
-                printf("start\n");
                 t = get_expected_htable(dif);
-                printf("%d %d\n", dif, test_htable(t));
                 fprintf(f, "%d %d\n", dif, test_htable(t));
             }
             break;

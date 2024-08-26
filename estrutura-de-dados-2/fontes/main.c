@@ -27,16 +27,16 @@ int main(int argc, const char * argv[]) {
     
     srand((unsigned int) time(NULL));
 
-//    tests_bt(0);
-//    tests_bt(1);
-//    tests_bt(2);
+    tests_bt(0);
+    tests_bt(1);
+    tests_bt(2);
 //    
 //    tests_avl(0);
 //    tests_avl(1);
 //    tests_avl(2);
     
-    tests_htable(0);
-    tests_htable(1);
-    tests_htable(2);
+//    tests_htable(0);
+//    tests_htable(1);
+//    tests_htable(2);
     return 0;
 }
