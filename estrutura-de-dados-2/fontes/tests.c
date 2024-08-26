@@ -12,7 +12,9 @@
 #include <time.h>
 
 const int TEST_REPEAT = 1000;
-const int INCREMENT = 500;
+const int INCREMENT = 100;
+const int MIN_SIZE = INCREMENT;
+const int MAX_SIZE = 10000;
 const char *TESTS_LABELS[] = {"best", "expected", "worst"};
 
 void get_best_bt(struct node **r) {
@@ -45,19 +47,19 @@ void tests_bt(unsigned int type) {
     struct node *r = NULL;
     switch (type) {
         case 0:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 get_best_bt(&r);
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
         case 1:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 get_expected_bt(&r);
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
         default:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 get_worst_bt(&r, dif);
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
@@ -71,9 +73,9 @@ void tests_bt(unsigned int type) {
 
 int test_bt_avl(struct node *btavl) {
     struct timespec s, e;
+    int n = rand();
     clock_gettime(CLOCK_MONOTONIC, &s);
     for (int c = 0; c < TEST_REPEAT; c++) {
-        int n = rand();
         btsearch(&btavl, n);
     }
     clock_gettime(CLOCK_MONOTONIC, &e);
@@ -109,22 +111,20 @@ void tests_avl(unsigned int type) {
     struct node *r = NULL;
     switch (type) {
         case 0:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 get_best_avl(&r);
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
         case 1:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 get_expected_avl(&r);
-                printf("%d %d\n", dif, test_bt_avl(r));
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
         default:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 get_worst_avl(&r, dif);
-                printf("%d %d\n", dif, test_bt_avl(r));
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
@@ -182,9 +182,10 @@ struct htable * get_worst_htable(int n) {
 
 int test_htable(struct htable *t) {
     struct timespec s, e;
+    int n = rand();
     clock_gettime(CLOCK_MONOTONIC, &s);
     for (int c = 0; c < TEST_REPEAT; c++) {
-        hash_search(t, rand());
+        hash_search(t, n);
     }
     clock_gettime(CLOCK_MONOTONIC, &e);
     
@@ -203,19 +204,19 @@ void tests_htable(unsigned int type) {
     struct htable *t = NULL;
     switch (type) {
         case 0:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 t = get_best_htable(dif);
                 fprintf(f, "%d %d\n", dif, test_htable(t));
             }
             break;
         case 1:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 t = get_expected_htable(dif);
                 fprintf(f, "%d %d\n", dif, test_htable(t));
             }
             break;
         default:
-            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = MIN_SIZE; dif <= MAX_SIZE; dif += INCREMENT) {
                 t = get_worst_htable(dif);
                 fprintf(f, "%d %d\n", dif, test_htable(t));
             }

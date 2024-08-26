@@ -31,7 +31,7 @@ void hinsert(struct htable *t, struct block *b) {
 void worst_hinsert(struct htable *t, struct block *b) {
     b->next = t->l[0];
     t->l[0] = b;
-    t->n = t->n + 1;;
+    t->n += 1;
 }
 
 void hfree(struct htable * t) {

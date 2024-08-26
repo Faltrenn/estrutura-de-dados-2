@@ -13,50 +13,6 @@
 #include "hash.h"
 #include "tests.h"
 
-int len(struct node *root) {
-    if (root == NULL) {
-        return 0;  // Base: Se o nó é nulo, retorna 0
-    }
-    // Recursão: soma 1 (o nó atual) mais o número de nós à esquerda e à direita
-    return 1 + len(root->l) + len(root->r);
-}
-
-#include <stdio.h>
-
-void print_tree(struct node* root, int space, int height) {
-    if (root == NULL)
-        return;
-
-    // Aumenta a distância entre níveis
-    space += height;
-
-    // Processa o filho da direita primeiro
-    print_tree(root->r, space, height);
-
-    // Imprime o nó atual após o espaço adequado
-    printf("\n");
-    for (int i = height; i < space; i++)
-        printf(" ");
-    printf("%d(h=%d)\n", root->v, root->h);
-
-    // Processa o filho da esquerda
-    print_tree(root->l, space, height);
-}
-
-// Função principal para exibir a árvore
-void show_tree(struct node* r) {
-    printf("V = %d\n", r->v);
-    if (r->r != NULL) {
-        printf("r");
-        show_tree(r->r);
-    }
-    if (r->l != NULL) {
-        printf("l");
-        show_tree(r->r);
-    }
-}
-
-
 int main(int argc, const char * argv[]) {
 //    int type = 2;
 //    if (strcmp(argv[1], "b") == 0) {
