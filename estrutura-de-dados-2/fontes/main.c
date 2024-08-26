@@ -36,27 +36,27 @@ int main(int argc, const char * argv[]) {
     
     srand((unsigned int) time(NULL));
 
-//    tests_bt(0);
-//    tests_bt(1);
-//    tests_bt(2);
-//    
-//    tests_avl(0);
-//    tests_avl(1);
-//    tests_avl(2);
-//    
-//    tests_htable(0);
-//    tests_htable(1);
-//    tests_htable(2);
+    tests_bt(0);
+    tests_bt(1);
+    tests_bt(2);
     
-    struct node *avl = NULL;
-    struct node *bt = NULL;
+    tests_avl(0);
+    tests_avl(1);
+    tests_avl(2);
     
-    for (int i = 0; i < 100000; i += 500) {
-        avlinsert(&avl, create_node(i));
-        btinsert(&bt, create_node(i));
-    }
-    printf("%d\n", test_bt_avl(avl));
-    printf("%d\n", test_bt_avl(bt));
+    tests_htable(0);
+    tests_htable(1);
+    tests_htable(2);
+    
+//    struct node *avl = NULL;
+//    struct node *bt = NULL;
+//    
+//    for (int i = 0; i < 100000; i += 500) {
+//        avlinsert(&avl, create_node(i));
+//        btinsert(&bt, create_node(i));
+//    }
+//    printf("%d\n", test_bt_avl(avl));
+//    printf("%d\n", test_bt_avl(bt));
     
     return 0;
 }
