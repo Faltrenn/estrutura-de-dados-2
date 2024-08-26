@@ -15,7 +15,7 @@ void avlinsert(struct node **, struct node *);
 void balance(struct node **);
 void update_height(struct node *);
 int height_offset(struct node *);
-int get_case(struct node * n);
+int get_height(struct node *);
 void rr(struct node **);
 void lr(struct node **);
 

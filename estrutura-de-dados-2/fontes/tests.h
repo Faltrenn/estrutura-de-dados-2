@@ -16,7 +16,7 @@ int test_bt_avl(struct node *);
 void tests_bt(unsigned int);
 void get_best_bt(struct node **);
 void get_expected_bt(struct node **);
-void get_worst_bt(struct node **);
+void get_worst_bt(struct node **, int);
 void tests_avl(unsigned int);
 void get_best_avl(struct node **);
 void get_expected_avl(struct node **);

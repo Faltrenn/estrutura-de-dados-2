@@ -7,19 +7,19 @@
 
 #include "avl.h"
 
-int getHeight(struct node *n) {
+int get_height(struct node *n) {
     if (n == NULL)
         return 0;
     return n->h;
 }
 
 void update_height(struct node* r) {
-    int hl = getHeight(r->l);
-    int hr = getHeight(r->r);
+    int hl = get_height(r->l);
+    int hr = get_height(r->r);
     r->h = hl > hr ? hl + 1: hr + 1;
 }
 
-void rotateRight(struct node** n) {
+void rr(struct node** n) {
     struct node* aux = (*n);
     (*n) = (*n)->l;
     (*n)->p = aux->p;
@@ -27,9 +27,10 @@ void rotateRight(struct node** n) {
     aux->l = (*n)->r;
     (*n)->r = aux;
     update_height(aux);
+    update_height(*n); // Certifique-se de atualizar também o novo nó
 }
 
-void rotateLeft(struct node** n) {
+void lr(struct node** n) {
     struct node* aux = (*n);
     (*n) = (*n)->r;
     (*n)->p = aux->p;
@@ -41,26 +42,22 @@ void rotateLeft(struct node** n) {
 }
 
 void balance(struct node** r) {
-    int hl = getHeight((*r)->l);
-    int hr = getHeight((*r)->r);
+    int hl = get_height((*r)->l);
+    int hr = get_height((*r)->r);
     if (abs(hl - hr) > 1) {
         if (hl > hr) {
-            if (getHeight((*r)->l->l) > getHeight((*r)->l->r)) {
-                // CASO 2
-                rotateRight(r);
+            if (get_height((*r)->l->l) > get_height((*r)->l->r)) {
+                rr(r);
             } else {
-                // CASO 4
-                rotateLeft(&((*r)->l));
-                rotateRight(r);
+                lr(&((*r)->l));
+                rr(r);
             }
         } else {
-            if (getHeight((*r)->r->r) > getHeight((*r)->r->l)) {
-                // CASO 1
-                rotateLeft(r);
+            if (get_height((*r)->r->r) > get_height((*r)->r->l)) {
+                lr(r);
             } else {
-                // CASO 3
-                rotateRight(&((*r)->r));
-                rotateLeft(r);
+                rr(&((*r)->r));
+                lr(r);
             }
         }
     }
@@ -69,10 +66,10 @@ void balance(struct node** r) {
 void avlinsert(struct node** r, struct node* n) {
     if((*r) != NULL) {
         if ((*r)->v > n->v) {
-            btinsert(&((*r)->l), n);
+            avlinsert(&((*r)->l), n);
             (*r)->l->p = (*r);
         } else {
-            btinsert(&((*r)->r), n);
+            avlinsert(&((*r)->r), n);
             (*r)->r->p = (*r);
         }
     } else {

@@ -25,19 +25,8 @@ void get_expected_bt(struct node **r) {
     }
 }
 
-int get_last_value(struct node *r) {
-    if (r == NULL) {
-        return 0;
-    }
-    if (r->r == NULL) {
-        return r->v;
-    }
-    return get_last_value(r->r);
-}
-
-void get_worst_bt(struct node **r) {
-    int last_value = get_last_value(*r);
-    for (int i = last_value; i < last_value + INCREMENT; i++) {
+void get_worst_bt(struct node **r, int size) {
+    for (int i = size; i < size + INCREMENT; i++) {
         btinsert(r, create_node(i));
     }
 }
@@ -69,7 +58,7 @@ void tests_bt(unsigned int type) {
             break;
         default:
             for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
-                get_worst_bt(&r);
+                get_worst_bt(&r, dif);
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
@@ -103,7 +92,7 @@ void get_expected_avl(struct node **r) {
 }
 
 void get_worst_avl(struct node **r, int size) {
-    for (int i = size - INCREMENT; i < size; i++) {
+    for (int i = size; i < size + INCREMENT; i++) {
         avlinsert(r, create_node(i));
     }
 }
