@@ -10,15 +10,16 @@
 void avlinsert(struct node** aux, struct node* n, struct node** r) {
     if (*aux == NULL) {
         *aux = n;
+        balance(*aux, r);
     } else {
         n->p = *aux;
+
         if ((*aux)->v > n->v) {
             avlinsert(&((*aux)->l), n, r);
         } else {
             avlinsert(&((*aux)->r), n, r);
         }
     }
-    balance(*aux, r);
 }
 
 void balance(struct node* n, struct node** r) {
@@ -95,4 +96,3 @@ void lr(struct node** n) {
 
     *n = y;
 }
-

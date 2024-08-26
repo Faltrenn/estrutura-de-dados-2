@@ -107,19 +107,19 @@ void tests_avl(unsigned int type) {
     struct node *r = NULL;
     switch (type) {
         case 0:
-            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 get_best_avl(&r);
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
         case 1:
-            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 get_expected_avl(&r);
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
         default:
-            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 get_worst_avl(&r);
                 printf("%d %d\n", dif, test_bt_avl(r));
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
@@ -145,19 +145,27 @@ struct htable * get_best_htable(int n) {
 }
 
 struct htable * get_expected_htable(int n) {
+    printf("a\n");
     struct htable *nt = (struct htable *) malloc(sizeof(struct htable));
+    printf("a\n");
     nt->l = (struct block **) malloc(sizeof(struct block *) * 4);
+    printf("a\n");
     nt->n = 0;
+    printf("a\n");
     nt->m = 4;
+    printf("a\n");
     
     for (int i = 0; i < 4; i++) {
         nt->l[i] = NULL;
+        printf("!\n");
     }
-    printf("?\n");
+    
     for (int i = 0; i < n; i++) {
         hinsert(nt, create_block(rand()));
+        printf("?\n");
     }
-    printf("!\n");
+    
+    printf("get\n");
     
     return nt;
 }
@@ -201,13 +209,13 @@ void tests_htable(unsigned int type) {
     struct htable *t = NULL;
     switch (type) {
         case 0:
-            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 t = get_best_htable(dif);
                 fprintf(f, "%d %d\n", dif, test_htable(t));
             }
             break;
         case 1:
-            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 printf("start\n");
                 t = get_expected_htable(dif);
                 printf("%d %d\n", dif, test_htable(t));
@@ -215,7 +223,7 @@ void tests_htable(unsigned int type) {
             }
             break;
         default:
-            for (int dif = 1000; dif <= 100000; dif += INCREMENT) {
+            for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 t = get_worst_htable(dif);
                 fprintf(f, "%d %d\n", dif, test_htable(t));
             }
@@ -224,5 +232,5 @@ void tests_htable(unsigned int type) {
     fclose(f);
     
     printf("%s finished.\n", TESTS_LABELS[type]);
-    hfree(t);
+//    hfree(t);
 }

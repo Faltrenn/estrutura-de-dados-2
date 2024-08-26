@@ -99,12 +99,10 @@ void hrefresh(struct htable *t, struct block *b) {
         nb = t->l[i];
 
         while (nb != NULL) {
-            i = 0;
-
             struct block *tab = create_block(nb->v);
 
             tab->next = nt.l[i];
-            nt.l[i] = tab;
+            nt.l[tab->v % nt.m] = tab;
 
             nb = nb->next;
 
