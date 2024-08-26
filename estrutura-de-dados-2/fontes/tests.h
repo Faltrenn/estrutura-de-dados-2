@@ -20,7 +20,7 @@ void get_worst_bt(struct node **);
 void tests_avl(unsigned int);
 void get_best_avl(struct node **);
 void get_expected_avl(struct node **);
-void get_worst_avl(struct node **);
+void get_worst_avl(struct node **, int);
 void tests_htable(unsigned int);
 struct htable * get_best_htable(int);
 struct htable * get_expected_htable(int);

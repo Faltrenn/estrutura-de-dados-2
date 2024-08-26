@@ -84,7 +84,8 @@ int test_bt_avl(struct node *btavl) {
     struct timespec s, e;
     clock_gettime(CLOCK_MONOTONIC, &s);
     for (int c = 0; c < TEST_REPEAT; c++) {
-        btsearch(&btavl, rand());
+        int n = rand();
+        btsearch(&btavl, n);
     }
     clock_gettime(CLOCK_MONOTONIC, &e);
     
@@ -97,13 +98,13 @@ void get_best_avl(struct node **r) {
 
 void get_expected_avl(struct node **r) {
     for (int i = 0; i < INCREMENT; i++) {
-        avlinsert(r, create_node(rand()), r);
+        avlinsert(r, create_node(rand()));
     }
 }
 
-void get_worst_avl(struct node **r) {
-    for (int i = 0; i < INCREMENT; i++) {
-        avlinsert(r, create_node(i), r);
+void get_worst_avl(struct node **r, int size) {
+    for (int i = size - INCREMENT; i < size; i++) {
+        avlinsert(r, create_node(i));
     }
 }
 
@@ -127,12 +128,14 @@ void tests_avl(unsigned int type) {
         case 1:
             for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
                 get_expected_avl(&r);
+                printf("%d %d\n", dif, test_bt_avl(r));
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
         default:
             for (int dif = 10000; dif <= 100000; dif += INCREMENT) {
-                get_worst_avl(&r);
+                get_worst_avl(&r, dif);
+                printf("%d %d\n", dif, test_bt_avl(r));
                 fprintf(f, "%d %d\n", dif, test_bt_avl(r));
             }
             break;
