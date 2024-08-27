@@ -7,19 +7,19 @@
 
 #include "avl.h"
 
-int getHeight(struct node *n) {
+int get_height(struct node *n) {
     if (n == NULL)
         return 0;
     return n->h;
 }
 
 void update_height(struct node* r) {
-    int hl = getHeight(r->l);
-    int hr = getHeight(r->r);
+    int hl = get_height(r->l);
+    int hr = get_height(r->r);
     r->h = (hl > hr ? hl : hr) + 1;
 }
 
-void rotateRight(struct node** n) {
+void rr(struct node** n) {
     struct node* aux = (*n)->l;
     (*n)->l = aux->r;
     if (aux->r != NULL) aux->r->p = (*n);
@@ -31,7 +31,7 @@ void rotateRight(struct node** n) {
     update_height(*n);
 }
 
-void rotateLeft(struct node** n) {
+void lr(struct node** n) {
     struct node* aux = (*n)->r;
     (*n)->r = aux->l;
     if (aux->l != NULL) aux->l->p = (*n);
@@ -45,22 +45,22 @@ void rotateLeft(struct node** n) {
 
 void balance(struct node** r) {
     update_height(*r);
-    int hl = getHeight((*r)->l);
-    int hr = getHeight((*r)->r);
+    int hl = get_height((*r)->l);
+    int hr = get_height((*r)->r);
     if (abs(hl - hr) > 1) {
         if (hl > hr) {
-            if (getHeight((*r)->l->l) >= getHeight((*r)->l->r)) {
-                rotateRight(r); // CASO 2
+            if (get_height((*r)->l->l) >= get_height((*r)->l->r)) {
+                rr(r);
             } else {
-                rotateLeft(&((*r)->l)); // CASO 4
-                rotateRight(r);
+                lr(&((*r)->l));
+                rr(r);
             }
         } else {
-            if (getHeight((*r)->r->r) >= getHeight((*r)->r->l)) {
-                rotateLeft(r); // CASO 1
+            if (get_height((*r)->r->r) >= get_height((*r)->r->l)) {
+                lr(r);
             } else {
-                rotateRight(&((*r)->r)); // CASO 3
-                rotateLeft(r);
+                rr(&((*r)->r));
+                lr(r);
             }
         }
     }

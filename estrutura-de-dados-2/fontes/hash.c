@@ -43,12 +43,9 @@ void hfree(struct htable * t) {
 }
 
 void free_block(struct block *b) {
-    struct block *aux;
-
-    while (b != NULL){
-        aux = b->next;
+    if (b != NULL) {
+        free_block(b->next);
         free(b);
-        b = aux;
     }
 }
 
